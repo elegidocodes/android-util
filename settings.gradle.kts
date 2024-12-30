@@ -16,8 +16,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal() // Ensure this is present
     }
 }
 
 rootProject.name = "Android Util"
 include(":app")
+include(":util")

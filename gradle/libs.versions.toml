@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.3"
+androidUtil = "1.0.0-alpha"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -10,6 +11,7 @@ constraintlayout = "2.2.0"
 swiperefreshlayout = "1.1.0"
 
 [libraries]
+android-util = { module = "com.elegidocodes:android-util", version.ref = "androidUtil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -21,4 +23,5 @@ swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 
