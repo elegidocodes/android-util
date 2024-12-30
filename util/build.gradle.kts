@@ -55,16 +55,17 @@ android {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.github.elegidocodes" // Represents your organization or domain
-            artifactId = "android-util" // Represents the library itself
-            version = "1.0.0-alpha" // Semantic versioning
+            groupId = "com.github.elegidocodes"
+            artifactId = "util"
+            version = "1.0.0-test"
 
             afterEvaluate {
-                from(components["release"])
+                from(components["release"]) // Ensures the AAR is included
             }
         }
     }
 }
+
 
 dependencies {
 
