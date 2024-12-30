@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.elegidocodes.android.util.theme.ThemeUtil;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

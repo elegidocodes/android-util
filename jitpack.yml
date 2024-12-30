@@ -3,6 +3,7 @@ jdk:
 
 install:
   - ./gradlew :util:assembleRelease
+  - ./gradlew :util:publishReleasePublicationToMavenRepository
 
 build:
   target: util
