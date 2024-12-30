@@ -6,3 +6,6 @@ install:
 
 build:
   target: util
+  outputs:
+    - util/build/outputs/aar/util-release.aar
+    - util/build/publications/release/pom-default.xml
