@@ -55,7 +55,7 @@ android {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.elegidocodes" // Represents your organization or domain
+            groupId = "com.github.elegidocodes" // Represents your organization or domain
             artifactId = "android-util" // Represents the library itself
             version = "1.0.0-alpha" // Semantic versioning
 
