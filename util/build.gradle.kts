@@ -57,7 +57,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.elegidocodes"
             artifactId = "util"
-            version = "1.0.0-test"
+            version = "1.0.0-alpha"
 
             afterEvaluate {
                 from(components["release"]) // Ensures the AAR is included
