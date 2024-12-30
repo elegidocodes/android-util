@@ -59,12 +59,21 @@ publishing {
             artifactId = "util"
             version = "1.0.0-alpha"
 
+            // Include AAR file in the publication
             afterEvaluate {
-                from(components["release"]) // Ensures the AAR is included
+                from(components["release"])
             }
         }
     }
+
+    repositories {
+        maven {
+            name = "jitpack"
+            url = uri("${layout.buildDirectory}/repos") // This allows JitPack to locate the artifacts
+        }
+    }
 }
+
 
 
 dependencies {

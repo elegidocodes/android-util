@@ -2,8 +2,8 @@ jdk:
   - openjdk17
 
 install:
-  - ./gradlew :util:assembleRelease
-  - ./gradlew :util:publishReleasePublicationToMavenRepository
+  - ./gradlew clean :util:assembleRelease
+  - ./gradlew clean :util:publishReleasePublicationToMavenRepository
 
 build:
   target: util
