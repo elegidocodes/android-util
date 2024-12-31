@@ -2,11 +2,8 @@ jdk:
   - openjdk17
 
 install:
-  # Step 1: Show all Gradle tasks in the :util module
-  - ./gradlew :util:tasks --all
 
-  # Step 2: Attempt to publish
-  - ./gradlew :util:publishReleasePublicationToMavenRepository --info --stacktrace
+  - ./gradlew publishReleasePublicationToMavenLocal --info --stacktrace
 
 build:
   target: util
