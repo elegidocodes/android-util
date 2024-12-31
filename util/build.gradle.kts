@@ -74,8 +74,6 @@ publishing {
     }
 }
 
-
-
 dependencies {
 
     implementation(libs.appcompat)
