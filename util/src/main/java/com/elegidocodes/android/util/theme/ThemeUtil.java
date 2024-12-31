@@ -1,12 +1,23 @@
 package com.elegidocodes.android.util.theme;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.Toolbar;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -60,6 +71,112 @@ public class ThemeUtil {
 
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(backgroundColor);
         swipeRefreshLayout.setColorSchemeColors(color);
+    }
+
+    /**
+     * Toggles the application's day/night mode programmatically.
+     *
+     * @param enableDarkMode Whether to enable dark (night) mode.
+     */
+    public static void toggleNightMode(boolean enableDarkMode) {
+        AppCompatDelegate.setDefaultNightMode(
+                enableDarkMode
+                        ? AppCompatDelegate.MODE_NIGHT_YES
+                        : AppCompatDelegate.MODE_NIGHT_NO
+        );
+    }
+
+    /**
+     * Sets the status bar color depending on whether dark mode is enabled.
+     *
+     * @param activity      The activity whose status bar color is to be changed.
+     * @param dayColorRes   The color resource for day (light mode).
+     * @param nightColorRes The color resource for night (dark mode).
+     */
+    public static void setStatusBarColorForTheme(
+            @NonNull Activity activity,
+            @ColorRes int dayColorRes,
+            @ColorRes int nightColorRes
+    ) {
+
+        boolean isDarkMode = isDarkModeEnabled(activity);
+
+        int color;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            color = activity.getColor(isDarkMode ? nightColorRes : dayColorRes);
+        } else {
+            color = ContextCompat.getColor(activity, isDarkMode ? nightColorRes : dayColorRes);
+        }
+        activity.getWindow().setStatusBarColor(color);
+    }
+
+    /**
+     * Retrieves a color from the current theme's attributes.
+     *
+     * @param context The context to access the theme.
+     * @param attrRes The attribute resource ID (e.g., R.attr.colorPrimary).
+     * @return The resolved color as an integer.
+     */
+    @ColorInt
+    public static int getThemeColor(@NonNull Context context, @AttrRes int attrRes) {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        if (theme.resolveAttribute(attrRes, typedValue, true)) {
+            if (typedValue.resourceId != 0) {
+                return ContextCompat.getColor(context, typedValue.resourceId);
+            } else {
+                return typedValue.data;
+            }
+        }
+        // Fallback or throw if attribute not found
+        return Color.BLACK;
+    }
+
+    /**
+     * Applies the current theme's colors to a Toolbar.
+     *
+     * @param context  The context to resolve theme attributes.
+     * @param toolbar  The Toolbar to style.
+     * @param bgAttr   The attribute for the background color (e.g., R.attr.colorPrimary).
+     * @param iconAttr The attribute for the icon tint color (e.g., R.attr.colorOnPrimary).
+     */
+    public static void applyThemeToToolbar(
+            @NonNull Context context,
+            @NonNull Toolbar toolbar,
+            @AttrRes int bgAttr,
+            @AttrRes int iconAttr
+    ) {
+        int backgroundColor = getThemeColor(context, bgAttr);
+        int iconColor = getThemeColor(context, iconAttr);
+
+        toolbar.setBackgroundColor(backgroundColor);
+        toolbar.setTitleTextColor(iconColor);
+
+        Drawable navIcon = toolbar.getNavigationIcon();
+        if (navIcon != null) {
+            navIcon.setTint(iconColor);
+        }
+    }
+
+    /**
+     * Sets the background color or drawable of a view depending on day/night mode.
+     *
+     * @param view               The view to apply the background to.
+     * @param dayBackgroundRes   The background (color or drawable) used in light mode.
+     * @param nightBackgroundRes The background (color or drawable) used in dark mode.
+     */
+    public static void setDayNightBackground(
+            @NonNull View view,
+            @DrawableRes int dayBackgroundRes,
+            @DrawableRes int nightBackgroundRes
+    ) {
+        Context context = view.getContext();
+        boolean isDarkMode = isDarkModeEnabled(context);
+
+        Drawable drawable = ContextCompat.getDrawable(context, isDarkMode ? nightBackgroundRes : dayBackgroundRes);
+        if (drawable != null) {
+            view.setBackground(drawable);
+        }
     }
 
 }
