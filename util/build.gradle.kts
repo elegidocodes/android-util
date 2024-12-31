@@ -68,7 +68,7 @@ publishing {
 
     repositories {
         maven {
-            name = "jitpack"
+            name = "maven"
             url = uri("${layout.buildDirectory}/repos") // This allows JitPack to locate the artifacts
         }
     }
