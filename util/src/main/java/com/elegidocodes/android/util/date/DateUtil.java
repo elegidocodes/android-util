@@ -1,6 +1,7 @@
 package com.elegidocodes.android.util.date;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -500,6 +501,93 @@ public class DateUtil {
 
         // 2. If parsing was successful, re-format using the overloaded method
         return parsedDate != null ? changeDateFormat(parsedDate, style, locale) : "";
+    }
+
+    // ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+    /**
+     * Checks if the given {@link Date} represents a day that has not yet passed when compared
+     * to the current date (ignoring the time of day).
+     *
+     * <p>In other words, this method answers the question: "Is the provided {@code date} today
+     * or in the future?" Both 'today' (including any time later today) and any future date
+     * will return {@code true}.</p>
+     *
+     * <p><strong>Example Usage:</strong></p>
+     * <pre>{@code
+     *   Date futureDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse("2025-01-01");
+     *   boolean notPassed = hasDayNotPassed(futureDate);
+     *   // notPassed == true if today's date is before 2025-01-01
+     * }</pre>
+     *
+     * @param date the {@link Date} to compare with the current date (may be null).
+     * @return {@code true} if {@code date} is today or a day in the future;
+     * {@code false} otherwise (including if {@code date} is null).
+     */
+    public static boolean hasDayNotPassed(Date date) {
+        if (date == null) {
+            Log.e("Error", "The provided date is null.");
+            return false;
+        }
+
+        // Use a SimpleDateFormat that only retains the "yyyy-MM-dd" portion
+        SimpleDateFormat sdfDateOnly = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdfDateOnly.setLenient(false);
+
+        try {
+            // Convert the given date to a 'date-only' string, then parse back to a Date (time = 00:00:00)
+            Date givenDateWithoutTime = sdfDateOnly.parse(sdfDateOnly.format(date));
+
+            // Do the same for the current date
+            Date currentDate = new Date();
+            Date currentDateWithoutTime = sdfDateOnly.parse(sdfDateOnly.format(currentDate));
+
+            if (givenDateWithoutTime != null && currentDateWithoutTime != null) {
+                // Return true if the given date is today or in the future
+                return givenDateWithoutTime.getTime() >= currentDateWithoutTime.getTime();
+            } else {
+                Log.e("Error", "Error calculating day comparison.");
+                return false;
+            }
+
+        } catch (ParseException e) {
+            Log.e("Error", "Error parsing the date: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Parses the given {@code dateString} using the specified {@code inputFormat} and determines
+     * whether the resulting day has not yet passed relative to the current day (ignoring time).
+     *
+     * <p>This method simply delegates to {@link #hasDayNotPassed(Date)} once it has parsed the date
+     * string into a {@link Date} object. If parsing is successful and the resulting date is not null,
+     * it returns the result of that call.</p>
+     *
+     * <h3>Usage Example:</h3>
+     * <pre>{@code
+     *   try {
+     *       boolean notPassed = hasDayNotPassed("2025-01-01 09:30:00", "yyyy-MM-dd HH:mm:ss");
+     *       // 'true' if today's date is before or the same day as Jan 1, 2025
+     *   } catch (ParseException e) {
+     *       e.printStackTrace();
+     *   }
+     * }</pre>
+     *
+     * @param dateString  the date/time string to parse (e.g. "2025-01-01 09:30:00").
+     * @param inputFormat the pattern recognized by {@link SimpleDateFormat}
+     *                    (e.g. "yyyy-MM-dd HH:mm:ss").
+     * @return {@code true} if the parsed date is the same day or a future day compared to the
+     * current date; {@code false} otherwise (or if the parsed date is null).
+     * @throws ParseException if {@code dateString} cannot be parsed using {@code inputFormat}.
+     * @see #hasDayNotPassed(Date)
+     */
+    public static boolean hasDayNotPassed(String dateString, String inputFormat) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(inputFormat, Locale.getDefault());
+        Date parsedDate = sdf.parse(dateString);
+
+        // If parsing succeeds, check if the day has not passed (including today)
+        return parsedDate != null && hasDayNotPassed(parsedDate);
     }
 
     // ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
