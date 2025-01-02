@@ -52,27 +52,13 @@ android {
 
 }
 
-/*
-afterEvaluate {
-    publishing {
-        publications {
-            register<MavenPublication>("release") {
-                from(components["release"])
-                groupId = "com.github.elegidocodes"
-                artifactId = "util"
-                version = "1.0.0-alpha"
-            }
-        }
-    }
-}
-*/
 
 publishing {
     publications {
         register<MavenPublication>("release") {
             groupId = "com.github.elegidocodes"
             artifactId = "util"
-            version = "1.0.0-beta"
+            version = "1.0.0"
 
             // Include AAR file in the publication
             afterEvaluate {
@@ -81,14 +67,6 @@ publishing {
         }
     }
 
-    /*
-    repositories {
-        maven {
-            name = "maven"
-            url = uri("${layout.buildDirectory}/repos") // This allows JitPack to locate the artifacts
-        }
-    }
-    */
 }
 
 
