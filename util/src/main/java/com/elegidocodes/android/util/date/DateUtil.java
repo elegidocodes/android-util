@@ -692,7 +692,27 @@ public class DateUtil {
          * <p>This is just an example pattern if you want to include time zone
          * offset or use an ISO standard format. Adjust if needed.</p>
          */
-        ISO_WITH_OFFSET("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ");
+        ISO_WITH_OFFSET("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"),
+
+        /**
+         * Format: 20250102
+         */
+        DATE_COMPACT("yyyyMMdd"),
+
+        /**
+         * Format: Thursday, January 2, 2025
+         */
+        FULL_TEXTUAL_DATE("EEEE, MMMM d, yyyy"),
+
+        /**
+         * Format: Thu, Jan 2, 2025
+         */
+        SHORT_TEXTUAL_DATE("EEE, MMM d, yyyy"),
+
+        /**
+         * Format: 2-Jan-2025
+         */
+        DAY_MONTH_YEAR_TEXTUAL("d-MMM-yyyy");
 
         private final String pattern;
 
