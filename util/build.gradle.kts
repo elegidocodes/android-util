@@ -19,15 +19,6 @@ android {
 
     }
 
-    /* For different flavors:
-    productFlavors {
-        register("foo") {
-            aarMetadata {
-                minCompileSdk = 21
-            }
-        }
-    }*/
-
     buildTypes {
         release {
             isMinifyEnabled = false
