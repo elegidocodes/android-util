@@ -699,6 +699,11 @@ public class DateUtil {
          */
         DATE_COMPACT("yyyyMMdd"),
 
+        /*
+         * Format: 20250102 15:04:05
+         */
+        DATE_COMPACT_WITH_TIME("yyyyMMdd HH:mm:ss"),
+
         /**
          * Format: Thursday, January 2, 2025
          */
