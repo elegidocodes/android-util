@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.swiperefreshlayout)
 
+    implementation(libs.gson)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
