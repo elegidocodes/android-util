@@ -3,6 +3,7 @@ plugins {
     id("maven-publish")
 }
 
+
 android {
     namespace = "com.elegidocodes.android.util"
     compileSdk = 34
@@ -49,7 +50,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.elegidocodes"
             artifactId = "util"
-            version = "1.0.5"
+            version = "1.0.6"
 
             // Include AAR file in the publication
             afterEvaluate {

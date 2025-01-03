@@ -586,4 +586,37 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Retrieves the last modified date of a file as a {@link Date} object.
+     *
+     * <p>This method returns the last modified date of the file at the given file path as a {@link Date} object.</p>
+     *
+     * <p>Example usage:
+     * <pre>{@code
+     * String filePath = "/path/to/file.txt";
+     * Date lastModified = FileUtil.getFileLastModifiedDate(filePath);
+     * if (lastModified != null) {
+     *     System.out.println("Last modified date: " + lastModified);
+     * } else {
+     *     System.out.println("File does not exist.");
+     * }
+     * }</pre>
+     *
+     * @param filePath The absolute path to the file.
+     * @return A {@link Date} object representing the last modified date of the file,
+     * or {@code null} if the file does not exist.
+     */
+    public static Date getFileLastModifiedDate(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("File path cannot be null or empty.");
+        }
+
+        File file = new File(filePath);
+        if (file.exists()) {
+            long lastModifiedInMillis = file.lastModified();
+            return new Date(lastModifiedInMillis); // Return the Date object
+        }
+        return null; // File does not exist
+    }
+
 }
