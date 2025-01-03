@@ -111,7 +111,7 @@ public class StringUtil {
      * <p>Example usage:
      * <pre>{@code
      * String input = "hello world! THIS is a Test.";
-     * String result = capitalizeWords(input);
+     * String result = capitalizeEachWord(input);
      * System.out.println(result); // Output: "Hello World! This Is A Test."
      * }</pre>
      *
@@ -119,7 +119,7 @@ public class StringUtil {
      * @return A string with the first letter of each word capitalized and the rest in lowercase.
      * If the input is null or empty, an empty string is returned.
      */
-    public static String capitalizeWords(String input) {
+    public static String capitalizeEachWord(String input) {
         if (input == null || input.isEmpty()) {
             return "";
         }
@@ -156,7 +156,7 @@ public class StringUtil {
      * <p>Example usage:
      * <pre>{@code
      * String input = "CamelCaseStringExample";
-     * List<String> words = getListOfWords(input);
+     * List<String> words = splitByUppercase(input);
      * System.out.println(words); // Output: ["Camel", "Case", "String", "Example"]
      * }</pre>
      *
@@ -164,7 +164,7 @@ public class StringUtil {
      * @return A list of words derived from the input string. If the input is null or empty,
      * an empty list is returned.
      */
-    public static List<String> getListOfWords(String input) {
+    public static List<String> splitByUppercase(String input) {
         if (input == null || input.isEmpty()) {
             return new ArrayList<>(); // Return an empty list for null or empty input
         }
@@ -194,25 +194,25 @@ public class StringUtil {
     /**
      * Splits a camel-case string into individual words and joins them with spaces.
      *
-     * <p>This method uses {@link #getListOfWords(String)} to split the input string into words based on
+     * <p>This method uses {@link #splitByUppercase(String)} to split the input string into words based on
      * uppercase letters, and then combines the words into a single string separated by spaces.</p>
      *
      * <p>Example usage:
      * <pre>{@code
      * String input = "CamelCaseStringExample";
-     * String result = uniteWordsWithSpace(input);
+     * String result = splitCamelCaseWithSpaces(input);
      * System.out.println(result); // Output: "Camel Case String Example"
      * }</pre>
      *
      * @param input The camel-case input string to be processed.
      * @return A string where the words are separated by spaces. If the input is null or empty, an empty string is returned.
      */
-    public static String uniteWordsWithSpace(String input) {
+    public static String splitCamelCaseWithSpaces(String input) {
         if (input == null || input.isEmpty()) {
             return ""; // Return an empty string for null or empty input
         }
 
-        List<String> result = getListOfWords(input);
+        List<String> result = splitByUppercase(input);
 
         // Use String.join for cleaner concatenation
         return String.join(" ", result);
