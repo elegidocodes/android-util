@@ -49,7 +49,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.elegidocodes"
             artifactId = "util"
-            version = "1.0.4"
+            version = "1.0.5"
 
             // Include AAR file in the publication
             afterEvaluate {

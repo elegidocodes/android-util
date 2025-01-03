@@ -705,6 +705,11 @@ public class DateUtil {
         DATE_COMPACT_WITH_TIME("yyyyMMdd HH:mm:ss"),
 
         /**
+         * Format: 20250102_150405
+         */
+        DATE_COMPACT_WITH_UNDERSCORE("yyyyMMdd_HHmmss"),
+
+        /**
          * Format: Thursday, January 2, 2025
          */
         FULL_TEXTUAL_DATE("EEEE, MMMM d, yyyy"),
