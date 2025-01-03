@@ -2,6 +2,8 @@ package com.elegidocodes.android.util.format;
 
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,6 +100,122 @@ public class StringUtil {
             return text.isEmpty() ? "" : text;
         }
         return "";
+    }
+
+    /**
+     * Capitalizes the first letter of each word in the given string while converting the rest of the letters to lowercase.
+     *
+     * <p>Words are determined by whitespace characters (e.g., spaces, tabs). Each word's first letter is
+     * converted to uppercase, and all subsequent letters are converted to lowercase.</p>
+     *
+     * <p>Example usage:
+     * <pre>{@code
+     * String input = "hello world! THIS is a Test.";
+     * String result = capitalizeWords(input);
+     * System.out.println(result); // Output: "Hello World! This Is A Test."
+     * }</pre>
+     *
+     * @param input The input string to transform.
+     * @return A string with the first letter of each word capitalized and the rest in lowercase.
+     * If the input is null or empty, an empty string is returned.
+     */
+    public static String capitalizeWords(String input) {
+        if (input == null || input.isEmpty()) {
+            return "";
+        }
+
+        input = input.toLowerCase();
+
+        StringBuilder sb = new StringBuilder();
+        boolean capitalizeNext = true;
+
+        for (char c : input.toCharArray()) {
+            if (Character.isWhitespace(c)) {
+                capitalizeNext = true;
+                sb.append(c);
+            } else if (capitalizeNext) {
+                c = Character.toUpperCase(c);
+                capitalizeNext = false;
+                sb.append(c);
+            } else {
+                c = Character.toLowerCase(c);
+                sb.append(c);
+            }
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Splits a given string into a list of words based on uppercase letters.
+     *
+     * <p>This method identifies words in the input string by detecting uppercase letters. When an
+     * uppercase letter is encountered (excluding the first character), it is treated as the beginning
+     * of a new word. The resulting list contains each word as a separate string.</p>
+     *
+     * <p>Example usage:
+     * <pre>{@code
+     * String input = "CamelCaseStringExample";
+     * List<String> words = getListOfWords(input);
+     * System.out.println(words); // Output: ["Camel", "Case", "String", "Example"]
+     * }</pre>
+     *
+     * @param input The input string to be split into words.
+     * @return A list of words derived from the input string. If the input is null or empty,
+     * an empty list is returned.
+     */
+    public static List<String> getListOfWords(String input) {
+        if (input == null || input.isEmpty()) {
+            return new ArrayList<>(); // Return an empty list for null or empty input
+        }
+
+        List<String> separatedWords = new ArrayList<>();
+        StringBuilder currentWord = new StringBuilder();
+
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+
+            if (Character.isUpperCase(currentChar) && i > 0) {
+                separatedWords.add(currentWord.toString());
+                currentWord = new StringBuilder();
+            }
+
+            currentWord.append(currentChar);
+        }
+
+        // Add the last word to the list
+        if (currentWord.length() > 0) {
+            separatedWords.add(currentWord.toString());
+        }
+
+        return separatedWords;
+    }
+
+    /**
+     * Splits a camel-case string into individual words and joins them with spaces.
+     *
+     * <p>This method uses {@link #getListOfWords(String)} to split the input string into words based on
+     * uppercase letters, and then combines the words into a single string separated by spaces.</p>
+     *
+     * <p>Example usage:
+     * <pre>{@code
+     * String input = "CamelCaseStringExample";
+     * String result = uniteWordsWithSpace(input);
+     * System.out.println(result); // Output: "Camel Case String Example"
+     * }</pre>
+     *
+     * @param input The camel-case input string to be processed.
+     * @return A string where the words are separated by spaces. If the input is null or empty, an empty string is returned.
+     */
+    public static String uniteWordsWithSpace(String input) {
+        if (input == null || input.isEmpty()) {
+            return ""; // Return an empty string for null or empty input
+        }
+
+        List<String> result = getListOfWords(input);
+
+        // Use String.join for cleaner concatenation
+        return String.join(" ", result);
     }
 
 }
