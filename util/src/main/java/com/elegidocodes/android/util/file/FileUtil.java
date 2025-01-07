@@ -31,6 +31,8 @@ import java.util.zip.ZipOutputStream;
 
 public class FileUtil {
 
+    private static final String TAG = "FILE_UTIL";
+
     /**
      * Opens a file using the appropriate application on the device.
      *
@@ -617,6 +619,43 @@ public class FileUtil {
             return new Date(lastModifiedInMillis); // Return the Date object
         }
         return null; // File does not exist
+    }
+
+    /**
+     * Creates a directory in the app's external files directory for the specified environment and child folder name.
+     *
+     * <p>This method first checks if the directory already exists. If it does not exist, it attempts to create it.
+     * A success or error message is logged accordingly. The method then returns the corresponding {@link File} object
+     * for the directory.</p>
+     *
+     * <p>Example usage:
+     * <pre>{@code
+     * // Example: Creating a folder named "MyImages" within the Pictures environment directory.
+     * String environment = Environment.DIRECTORY_PICTURES;
+     * String childFolder = "MyImages";
+     * File folder = generateFolder(context, environment, childFolder);
+     *
+     * // 'folder' now references the created or existing directory, e.g.:
+     * // /storage/emulated/0/Android/data/[package_name]/files/Pictures/MyImages
+     * }</pre>
+     * </p>
+     *
+     * @param context     The context used to access the external files directory.
+     * @param environment The environment type where the folder should be created (e.g., {@link android.os.Environment#DIRECTORY_PICTURES}).
+     * @param child       The name of the child folder to create within the specified environment directory.
+     * @return A {@link File} object representing the created or existing folder.
+     */
+    public static File generateFolder(Context context, String environment, String child) {
+        File folder = new File(context.getExternalFilesDir(environment), child);
+        if (!folder.exists()) {
+            boolean created = folder.mkdir();
+            if (created) {
+                Log.d(TAG, "Folder created.");
+            } else {
+                Log.e(TAG, "The folder could not be created.");
+            }
+        }
+        return folder;
     }
 
 }
