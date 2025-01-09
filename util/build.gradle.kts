@@ -70,7 +70,6 @@ dependencies {
     implementation(libs.swiperefreshlayout)
     implementation(libs.zxing.android.embedded)
 
-
     implementation(libs.gson)
 
     testImplementation(libs.junit)
