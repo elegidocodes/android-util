@@ -51,7 +51,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.elegidocodes"
             artifactId = "util"
-            version = "1.0.7"
+            version = "1.0.8"
 
             // Include AAR file in the publication
             afterEvaluate {
@@ -68,6 +68,8 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.swiperefreshlayout)
+    implementation(libs.zxing.android.embedded)
+
 
     implementation(libs.gson)
 

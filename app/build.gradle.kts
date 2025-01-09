@@ -37,7 +37,6 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.swiperefreshlayout)
-    implementation("com.github.elegidocodes:util:1.0.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
