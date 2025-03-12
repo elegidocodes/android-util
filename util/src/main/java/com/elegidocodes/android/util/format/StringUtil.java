@@ -9,6 +9,10 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 
+    private StringUtil() {
+        // Private constructor to prevent instantiation
+    }
+
     /**
      * Capitalizes the first letter of the input string.
      * If the input string is null or empty, it returns the original string.
@@ -216,6 +220,29 @@ public class StringUtil {
 
         // Use String.join for cleaner concatenation
         return String.join(" ", result);
+    }
+
+    /**
+     * Removes leading zeros from a numeric string and converts it to an integer.
+     *
+     * <p>This method uses a regular expression to remove any leading zeros from the input string
+     * and then parses the resulting string into an integer. If the input string consists solely of zeros,
+     * the method will return 0.</p>
+     *
+     * <p>Example usage:
+     * <pre>{@code
+     * String input = "00012345";
+     * int result = removeLeadingZeros(input);
+     * System.out.println(result); // Output: 12345
+     * }</pre>
+     *
+     * @param number The numeric string with leading zeros to be processed.
+     * @return The integer value of the string after removing leading zeros. If the input is null or empty,
+     * a {@link NumberFormatException} will be thrown.
+     * @throws NumberFormatException If the input string is not a valid number or is null/empty.
+     */
+    public static int removeLeadingZeros(String number) {
+        return Integer.parseInt(number.replaceFirst("^0+", ""));
     }
 
 }
