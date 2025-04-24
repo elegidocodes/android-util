@@ -72,6 +72,11 @@ public class SignatureView extends View {
     private Path path;
 
     /**
+     * Flag to track if user has signed
+     */
+    private boolean hasSigned = false;
+
+    /**
      * Constructs a new {@code SignatureView} with the specified context and attribute set.
      *
      * @param context the context from which the view is running
@@ -131,6 +136,7 @@ public class SignatureView extends View {
             case MotionEvent.ACTION_DOWN:
                 // Start a new path segment at the touch-down coordinates.
                 path.moveTo(x, y);
+                hasSigned = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 // Extend the path to the new coordinates.
@@ -160,7 +166,15 @@ public class SignatureView extends View {
      */
     public void clear() {
         path.reset();
+        hasSigned = false;
         invalidate();
+    }
+
+    /**
+     * Returns true if the user has signed (touched and drawn on the view).
+     */
+    public boolean isSigned() {
+        return hasSigned;
     }
 
     /**
